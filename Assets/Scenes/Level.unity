@@ -233,6 +233,7 @@ GameObject:
   m_Component:
   - component: {fileID: 61840082}
   - component: {fileID: 61840084}
+  - component: {fileID: 61840083}
   m_Layer: 0
   m_Name: World
   m_TagString: Untagged
@@ -254,6 +255,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &61840083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61840081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e644cf6a590b09449c7641159a3410e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &61840084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,7 +299,7 @@ MonoBehaviour:
   - name: repeater
     id: 8
     poweredID: 9
-    metadata: 01109
+    metadata: 020190
   - name: lamp
     id: 10
     poweredID: 11
@@ -304,6 +317,8 @@ MonoBehaviour:
   - {fileID: 2438070748094799771, guid: 8996f12acb8223642ad1217cc294f3b8, type: 3}
   - {fileID: 3379771803086225664, guid: 8996f12acb8223642ad1217cc294f3b8, type: 3}
   - {fileID: 718280612368116111, guid: 8996f12acb8223642ad1217cc294f3b8, type: 3}
+  - {fileID: -4313456864172428432, guid: 8996f12acb8223642ad1217cc294f3b8, type: 3}
+  - {fileID: 5967365260735465091, guid: 8996f12acb8223642ad1217cc294f3b8, type: 3}
   tilePrefab: {fileID: 2622669174441762575, guid: 80fb082766160ba44b1c6196598164a2, type: 3}
 --- !u!1 &519420028
 GameObject:

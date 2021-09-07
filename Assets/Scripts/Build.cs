@@ -53,8 +53,7 @@ public class Build : MonoBehaviour
             Tile currentTile = WorldSettings.world[(int)tilePosition.x, (int)tilePosition.y];
             if(currentTile.tileData.id == 6)
             {
-                if (currentTile.powered) currentTile.removeSignal();
-                else currentTile.receiveSignal();
+                currentTile.setSignal(!currentTile.powered);
             }
         }
     }

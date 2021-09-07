@@ -38,6 +38,12 @@ TextureImporter:
   - first:
       213: 718280612368116111
     second: texture_atlas_11
+  - first:
+      213: -4313456864172428432
+    second: texture_atlas_12
+  - first:
+      213: 5967365260735465091
+    second: texture_atlas_13
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -256,7 +262,7 @@ TextureImporter:
       name: texture_atlas_6
       rect:
         serializedVersion: 2
-        x: 112
+        x: 96
         y: 240
         width: 16
         height: 16
@@ -277,7 +283,7 @@ TextureImporter:
       name: texture_atlas_7
       rect:
         serializedVersion: 2
-        x: 128
+        x: 112
         y: 240
         width: 16
         height: 16
@@ -298,7 +304,7 @@ TextureImporter:
       name: texture_atlas_8
       rect:
         serializedVersion: 2
-        x: 144
+        x: 128
         y: 240
         width: 16
         height: 16
@@ -319,7 +325,7 @@ TextureImporter:
       name: texture_atlas_9
       rect:
         serializedVersion: 2
-        x: 160
+        x: 144
         y: 240
         width: 16
         height: 16
@@ -340,7 +346,7 @@ TextureImporter:
       name: texture_atlas_10
       rect:
         serializedVersion: 2
-        x: 176
+        x: 160
         y: 240
         width: 16
         height: 16
@@ -361,7 +367,7 @@ TextureImporter:
       name: texture_atlas_11
       rect:
         serializedVersion: 2
-        x: 192
+        x: 176
         y: 240
         width: 16
         height: 16
@@ -374,6 +380,48 @@ TextureImporter:
       bones: []
       spriteID: f89604d4968d7f900800000000000000
       internalID: 718280612368116111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: texture_atlas_12
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0733801f5d58324c0800000000000000
+      internalID: -4313456864172428432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: texture_atlas_13
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 386c423961750d250800000000000000
+      internalID: 5967365260735465091
       vertices: []
       indices: 
       edges: []

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,7 @@ public class TileData
 
 public class Tile
 {
-    #region idunno
+    #region variables
 
     public TileData tileData
     {
@@ -51,27 +52,18 @@ public class Tile
         get { return poweredStorage; }
         set
         {
-            if (value && !powered)
+            if (value != powered)
             {
-                sprite = WorldSettings.textures[tileData.poweredID];
+                if(value) sprite = WorldSettings.textures[tileData.poweredID];
+                else sprite = WorldSettings.textures[tileData.id];
 
                 for (int i = 0; i < tileObject.childCount; i++)
                 {
-                    tileObject.GetChild(i).GetComponent<SpriteRenderer>().sprite = WorldSettings.textures[5];
+                    if(metadata.Substring(Convert.ToByte(tileObject.GetChild(i).name), 1) == "2") tileObject.GetChild(i).GetComponent<SpriteRenderer>().sprite = WorldSettings.textures[12 + Convert.ToByte(value)];
+                    else tileObject.GetChild(i).GetComponent<SpriteRenderer>().sprite = WorldSettings.textures[4 + Convert.ToByte(value)];
                 }
                 poweredStorage = value;
-                sendSignalToAdjacentTiles();
-            }
-            else if(!value && powered)
-            {
-                sprite = WorldSettings.textures[tileData.id];
-
-                for (int i = 0; i < tileObject.childCount; i++)
-                {
-                    tileObject.GetChild(i).GetComponent<SpriteRenderer>().sprite = WorldSettings.textures[4];
-                }
-                poweredStorage = value;
-                removeSignalFromAdjacentTiles();
+                setSignalToAdjacentTiles(value);
             }
         }
     }
@@ -97,74 +89,62 @@ public class Tile
     {
         for (int i = 0; i < 4; i++)
         {
-            if (metadata.Substring(i, 1).Equals("1") && getChildWithName(i.ToString()) == null)
+            if (metadata.Substring(i, 1) != "0")
             {
-                GameObject wire = new GameObject();
-                wire.name = i.ToString();
+                if(getChildWithName(i.ToString()) != null) GameObject.Destroy(getChildWithName(i.ToString()).gameObject);
+
+                GameObject wire = new GameObject(i.ToString());
 
                 wire.transform.parent = tileObject;
                 wire.transform.localPosition = Vector3.zero;
 
                 wire.transform.rotation = Quaternion.Euler(0, 0, i * 90);
-                wire.AddComponent<SpriteRenderer>().sprite = WorldSettings.textures[4];
+
+                if (metadata.Substring(i, 1) == "1") wire.AddComponent<SpriteRenderer>().sprite = WorldSettings.textures[4 + Convert.ToByte(powered)];
+                else wire.AddComponent<SpriteRenderer>().sprite = WorldSettings.textures[12 + Convert.ToByte(powered)];
             }
-            else if (metadata.Substring(i, 1).Equals("0") && getChildWithName(i.ToString()) != null)
+            else if (metadata.Substring(i, 1) == "0" && getChildWithName(i.ToString()) != null)
             {
-                Object.Destroy(getChildWithName(i.ToString()).gameObject);
+                GameObject.Destroy(getChildWithName(i.ToString()).gameObject);
             }
         }
     }
 
-    public void receiveSignal()
+    public void setSignal(bool state)
     {
-        if (powered) return;
-        powered = true;
+        if (powered == state) return;
 
         switch(tileData.id)
         {
             case 8:
+                if (state != Convert.ToBoolean(Convert.ToByte(metadata.Substring(5, 1)))) LogicEngine.current.queueRepeater(this, state);
                 break;
             default:
+                powered = state;
                 break;
         }
     }
 
-    public void removeSignal()
-    {
-        if (!powered) return;
-        powered = false;
-
-        switch (tileData.id)
-        {
-            case 8:
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void sendSignalToAdjacentTiles()
+    private void setSignalToAdjacentTiles(bool state)
     {
         for(int i = 0; i < 4; i++)
         {
             Tile adjacentTile = getAdjacentTile(i);
             if (adjacentTile == null) continue;
-            if (metadata.Substring(i, 1).Equals("1") && adjacentTile.metadata.Substring(getOppositeIndex(i), 1).Equals("1"))
+            switch(tileData.id)
             {
-                adjacentTile.receiveSignal();
-            }
-        }
-    }
-
-    private void removeSignalFromAdjacentTiles()
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            Tile adjacentTile = getAdjacentTile(i);
-            if (adjacentTile == null) continue;
-            if (metadata.Substring(i, 1).Equals("1") && adjacentTile.metadata.Substring(getOppositeIndex(i), 1).Equals("1"))
-            {
-                adjacentTile.removeSignal();
+                case 8:
+                    if (metadata.Substring(i, 1) == "2" && adjacentTile.metadata.Substring(getOppositeIndex(i), 1) == "1")
+                    {
+                        adjacentTile.setSignal(state);
+                    }
+                    break;
+                default:
+                    if (metadata.Substring(i, 1) == "1" && adjacentTile.metadata.Substring(getOppositeIndex(i), 1) == "1")
+                    {
+                        adjacentTile.setSignal(state);
+                    }
+                    break;
             }
         }
     }
@@ -205,7 +185,7 @@ public class Tile
 
         for (int i = 0; i < tileObject.childCount; i++)
         {
-            if (tileObject.GetChild(i).name.Equals(index))
+            if (tileObject.GetChild(i).name == index)
             {
                 return tileObject.GetChild(i);
             }
