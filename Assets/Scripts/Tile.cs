@@ -3,13 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class TileData
+
+public interface TileData
 {
-    public string name;
-    public byte id;
-    public byte poweredID;
-    public string metadata;
+    string name { get; set; }
+    byte id { get; set; }
+    byte poweredID { get; set; }
+    string metadata { get; set; } //up, left, down, right
+
+    void setSignal(Tile tile, bool state);
+    void setSignalToAdjacentTile(Tile tile, bool state, int index);
+    void cycleMetaDataAt(int index);
 }
 
 public class Tile
@@ -21,6 +25,7 @@ public class Tile
         get { return tileDataStorage; }
         set
         {
+            powered = false;
             tileDataStorage = value;
             sprite = WorldSettings.textures[value.id];
             metadata = value.metadata;
@@ -91,7 +96,7 @@ public class Tile
         {
             if (metadata.Substring(i, 1) != "0")
             {
-                if(getChildWithName(i.ToString()) != null) GameObject.Destroy(getChildWithName(i.ToString()).gameObject);
+                if(tileObject.getChildWithName(i.ToString()) != null) GameObject.Destroy(tileObject.getChildWithName(i.ToString()).gameObject);
 
                 GameObject wire = new GameObject(i.ToString());
 
@@ -103,9 +108,9 @@ public class Tile
                 if (metadata.Substring(i, 1) == "1") wire.AddComponent<SpriteRenderer>().sprite = WorldSettings.textures[4 + Convert.ToByte(powered)];
                 else wire.AddComponent<SpriteRenderer>().sprite = WorldSettings.textures[12 + Convert.ToByte(powered)];
             }
-            else if (metadata.Substring(i, 1) == "0" && getChildWithName(i.ToString()) != null)
+            else if (metadata.Substring(i, 1) == "0" && tileObject.getChildWithName(i.ToString()) != null)
             {
-                GameObject.Destroy(getChildWithName(i.ToString()).gameObject);
+                GameObject.Destroy(tileObject.getChildWithName(i.ToString()).gameObject);
             }
         }
     }
@@ -114,48 +119,26 @@ public class Tile
     {
         if (powered == state) return;
 
-        switch(tileData.id)
-        {
-            case 8:
-                if (state != Convert.ToBoolean(Convert.ToByte(metadata.Substring(5, 1)))) LogicEngine.current.queueRepeater(this, state);
-                break;
-            default:
-                powered = state;
-                break;
-        }
+        tileData.setSignal(this, state);
     }
 
     private void setSignalToAdjacentTiles(bool state)
     {
         for(int i = 0; i < 4; i++)
         {
-            Tile adjacentTile = getAdjacentTile(i);
-            if (adjacentTile == null) continue;
-            switch(tileData.id)
-            {
-                case 8:
-                    if (metadata.Substring(i, 1) == "2" && adjacentTile.metadata.Substring(getOppositeIndex(i), 1) == "1")
-                    {
-                        adjacentTile.setSignal(state);
-                    }
-                    break;
-                default:
-                    if (metadata.Substring(i, 1) == "1" && adjacentTile.metadata.Substring(getOppositeIndex(i), 1) == "1")
-                    {
-                        adjacentTile.setSignal(state);
-                    }
-                    break;
-            }
+            tileData.setSignalToAdjacentTile(this, state, i);
         }
     }
 
-    private int getOppositeIndex(int index)
+    public void defaultSetSignalToAdjacentTile(bool state, int index)
     {
-        if (index < 2) return index + 2;
-        else return index - 2;
+        Tile adjacentTile = getAdjacentTile(index);
+        if (adjacentTile == null) return;
+
+        if (metadata.Substring(index, 1) == "1" && adjacentTile.metadata.Substring(getOppositeIndex(index), 1) == "1") adjacentTile.setSignal(state);
     }
 
-    private Tile getAdjacentTile(int index)
+    public Tile getAdjacentTile(int index)
     {
         int x = (int)tileObject.position.x;
         int y = (int)tileObject.position.y;
@@ -179,18 +162,9 @@ public class Tile
         }
     }
 
-    #region Children
-    private Transform getChildWithName(string index)
+    public int getOppositeIndex(int index)
     {
-
-        for (int i = 0; i < tileObject.childCount; i++)
-        {
-            if (tileObject.GetChild(i).name == index)
-            {
-                return tileObject.GetChild(i);
-            }
-        }
-        return null;
+        if (index < 2) return index + 2;
+        else return index - 2;
     }
-    #endregion
 }

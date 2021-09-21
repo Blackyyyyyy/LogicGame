@@ -7,6 +7,7 @@ public class Build : MonoBehaviour
     private Vector2 cursorPosition;
     
     private Slot activeSlot;
+    private bool editingSelectedTile = false;
 
     void Start()
     {
@@ -68,96 +69,87 @@ public class Build : MonoBehaviour
         return new Vector2(Mathf.Round(cursorPosition.x), Mathf.Round(cursorPosition.y));
     }
 
+    private void setActiveSlot(int index)
+    {
+        if(WorldSettings.slots.Length > index)
+        {
+            activeSlot.animate = false;
+            activeSlot = WorldSettings.slots[index];
+            activeSlot.animate = true;
+        }
+    }
+
     private void inventoryControls()
     {
         if (Input.GetKeyDown(Settings.slot_1))
         {
-            if(WorldSettings.slots.Length > 0)
-            {
-                activeSlot.animate = false;
-                activeSlot = WorldSettings.slots[0];
-                activeSlot.animate = true;
-            }
+            setActiveSlot(0);
         }
         if (Input.GetKeyDown(Settings.slot_2))
         {
-            if (WorldSettings.slots.Length > 1)
-            {
-                activeSlot.animate = false;
-                activeSlot = WorldSettings.slots[1];
-                activeSlot.animate = true;
-            }
+            setActiveSlot(1);
         }
         if (Input.GetKeyDown(Settings.slot_3))
         {
-            if (WorldSettings.slots.Length > 2)
-            {
-                activeSlot.animate = false;
-                activeSlot = WorldSettings.slots[2];
-                activeSlot.animate = true;
-            }
+            setActiveSlot(2);
         }
         if (Input.GetKeyDown(Settings.slot_4))
         {
-            if (WorldSettings.slots.Length > 3)
-            {
-                activeSlot.animate = false;
-                activeSlot = WorldSettings.slots[3];
-                activeSlot.animate = true;
-            }
+            setActiveSlot(3);
         }
         if (Input.GetKeyDown(Settings.slot_5))
         {
-            if (WorldSettings.slots.Length > 4)
-            {
-                activeSlot.animate = false;
-                activeSlot = WorldSettings.slots[4];
-                activeSlot.animate = true;
-            }
+            setActiveSlot(4);
         }
         if (Input.GetKeyDown(Settings.slot_6))
         {
-            if (WorldSettings.slots.Length > 5)
-            {
-                activeSlot.animate = false;
-                activeSlot = WorldSettings.slots[5];
-                activeSlot.animate = true;
-            }
+            setActiveSlot(5);
         }
         if (Input.GetKeyDown(Settings.slot_7))
         {
-            if (WorldSettings.slots.Length > 6)
-            {
-                activeSlot.animate = false;
-                activeSlot = WorldSettings.slots[6];
-                activeSlot.animate = true;
-            }
+            setActiveSlot(6);
         }
         if (Input.GetKeyDown(Settings.slot_8))
         {
-            if (WorldSettings.slots.Length > 7)
-            {
-                activeSlot.animate = false;
-                activeSlot = WorldSettings.slots[7];
-                activeSlot.animate = true;
-            }
+            setActiveSlot(7);
         }
         if (Input.GetKeyDown(Settings.slot_9))
         {
-            if (WorldSettings.slots.Length > 8)
-            {
-                activeSlot.animate = false;
-                activeSlot = WorldSettings.slots[8];
-                activeSlot.animate = true;
-            }
+            setActiveSlot(8);
         }
         if (Input.GetKeyDown(Settings.slot_0))
         {
-            if (WorldSettings.slots.Length > 9)
+            setActiveSlot(9);
+        }
+
+        if(!editingSelectedTile && Input.GetKeyDown(Settings.editSelectedTile))
+        {
+            MainCam.frozen = true;
+            editingSelectedTile = true;
+        }
+        else if(editingSelectedTile && Input.GetKeyUp(Settings.editSelectedTile))
+        {
+            MainCam.frozen = false;
+            editingSelectedTile = false;
+        }
+
+        if(editingSelectedTile)
+        {
+            if(Input.GetKeyDown(Settings.up))
             {
-                activeSlot.animate = false;
-                activeSlot = WorldSettings.slots[9];
-                activeSlot.animate = true;
+                activeSlot.cycleMetaDataAt(0);
+            }
+            if (Input.GetKeyDown(Settings.left))
+            {
+                activeSlot.cycleMetaDataAt(1);
+            }
+            if (Input.GetKeyDown(Settings.down))
+            {
+                activeSlot.cycleMetaDataAt(2);
+            }
+            if (Input.GetKeyDown(Settings.right))
+            {
+                activeSlot.cycleMetaDataAt(3);
             }
         }
     }

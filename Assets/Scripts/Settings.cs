@@ -26,4 +26,6 @@ public static class Settings
     public static KeyCode slot_8 = KeyCode.Alpha8;
     public static KeyCode slot_9 = KeyCode.Alpha9;
     public static KeyCode slot_0 = KeyCode.Alpha0;
+
+    public static KeyCode editSelectedTile = KeyCode.LeftShift;
 }

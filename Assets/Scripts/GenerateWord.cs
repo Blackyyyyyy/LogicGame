@@ -14,7 +14,9 @@ public class GenerateWord : MonoBehaviour
 
     void Start()
     {
-        WorldSettings.tiles = tiles;
+        populateTileDataList();
+
+        tiles = WorldSettings.tiles;
         WorldSettings.textures = textures;
 
         int worldSize = WorldSettings.size;
@@ -30,6 +32,16 @@ public class GenerateWord : MonoBehaviour
                 world[x, y] = newTile;
             }
         }
+    }
+
+    private void populateTileDataList()
+    {
+        new Tile_empty();
+        new Tile_blank();
+        new Tile_wire();
+        new Tile_button();
+        new Tile_repeater();
+        new Tile_lamp();
     }
 }
 

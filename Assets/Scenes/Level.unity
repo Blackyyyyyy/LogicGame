@@ -279,31 +279,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7613ab766fc854d4da67aeaa2dd35ff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tiles:
-  - name: empty
-    id: 0
-    poweredID: 0
-    metadata: 0000
-  - name: blank
-    id: 1
-    poweredID: 1
-    metadata: 0000
-  - name: wire
-    id: 2
-    poweredID: 3
-    metadata: 1110
-  - name: battery
-    id: 6
-    poweredID: 7
-    metadata: 0100
-  - name: repeater
-    id: 8
-    poweredID: 9
-    metadata: 020190
-  - name: lamp
-    id: 10
-    poweredID: 11
-    metadata: 1111
   textures:
   - {fileID: 8880373262106072214, guid: 8996f12acb8223642ad1217cc294f3b8, type: 3}
   - {fileID: 9057248739300881049, guid: 8996f12acb8223642ad1217cc294f3b8, type: 3}

@@ -59,9 +59,16 @@
     <Compile Include="Assets\Scripts\Settings.cs" />
     <Compile Include="Assets\Scripts\GenerateWord.cs" />
     <Compile Include="Assets\Scripts\Inventory\Slot.cs" />
+    <Compile Include="Assets\Scripts\Tile.cs" />
     <Compile Include="Assets\Scripts\Build.cs" />
     <Compile Include="Assets\Scripts\Inventory\Inentory.cs" />
-    <Compile Include="Assets\Scripts\Tile.cs" />
+    <Compile Include="Assets\Scripts\Tiles\Tile_empty.cs" />
+    <Compile Include="Assets\Scripts\Tiles\Tile_blank.cs" />
+    <Compile Include="Assets\Scripts\Tiles\Tile_button.cs" />
+    <Compile Include="Assets\Scripts\Tiles\Tile_lamp.cs" />
+    <Compile Include="Assets\Scripts\Tiles\Tile_wire.cs" />
+    <Compile Include="Assets\Scripts\Tiles\Tile_repeater.cs" />
+    <Compile Include="Assets\Scripts\MySystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

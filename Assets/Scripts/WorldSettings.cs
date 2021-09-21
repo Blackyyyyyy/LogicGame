@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public static class WorldSettings
 {
-    public static List<TileData> tiles;
+    public static List<TileData> tiles = new List<TileData>();
     public static List<Sprite> textures;
 
     public static Tile[,] world;

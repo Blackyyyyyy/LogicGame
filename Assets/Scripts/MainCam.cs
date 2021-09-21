@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MainCam : MonoBehaviour
 {
+    public static bool frozen = false;
+
     public float speed;
     public float zoomSpeed;
 
@@ -17,6 +19,8 @@ public class MainCam : MonoBehaviour
 
     void Update()
     {
+        if (frozen) return;
+
         Vector3 transPos = transform.position;
         transform.position = new Vector3(Mathf.Clamp(transPos.x + convertHorizontalMousePositionToDirection() * Time.deltaTime * speed, 0, WorldSettings.size), 
                                          Mathf.Clamp(transPos.y + convertVerticalMousePositionToDirection() * Time.deltaTime * speed, 0, WorldSettings.size),
