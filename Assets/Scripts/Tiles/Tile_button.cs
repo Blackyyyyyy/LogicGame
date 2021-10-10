@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,8 @@ public class Tile_button : TileData
 
     public void setSignal(Tile tile, bool state)
     {
+        if (tile.powered == state) return;
+
         tile.powered = state;
     }
 
@@ -26,6 +29,7 @@ public class Tile_button : TileData
 
     public void cycleMetaDataAt(int index)
     {
-        this.defaultCycleMetaDataAt(index);
+        if (metadata.getCharAt(index) == '0') metadata = metadata.setCharAt(index, '2');
+        else metadata = metadata.setCharAt(index, '0');
     }
 }

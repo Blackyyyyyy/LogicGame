@@ -8,7 +8,7 @@ public class Tile_repeater : TileData
     public string name { get; set; } = "repeater";
     public byte id { get; set; } = 8;
     public byte poweredID { get; set; } = 9;
-    public string metadata { get; set; } = "000090";
+    public string metadata { get; set; } = "00009";
 
     public Tile_repeater()
     {
@@ -17,7 +17,7 @@ public class Tile_repeater : TileData
 
     public void setSignal(Tile tile, bool state)
     {
-        if (state != Convert.ToBoolean(Convert.ToByte(tile.metadata.Substring(5, 1)))) LogicEngine.current.queueRepeater(tile, state);
+        /*if (state != Convert.ToBoolean(Convert.ToByte(tile.metadata.Substring(5, 1))))*/ LogicEngine.current.queueRepeater(tile, state);
     }
 
     public void setSignalToAdjacentTile(Tile tile, bool state, int index)

@@ -15,7 +15,7 @@ public class LogicEngine : MonoBehaviour
     public void queueRepeater(Tile repeater, bool state)
     {
         byte delayInFrames = Convert.ToByte(repeater.metadata.Substring(4, 1));
-        repeater.metadata = repeater.metadata.Substring(0, 5) + Convert.ToByte(state);
+        //repeater.metadata = repeater.metadata.Substring(0, 5) + Convert.ToByte(state);
         StartCoroutine(queueSignalChange(repeater, delayInFrames, state));
     }
 
@@ -25,6 +25,7 @@ public class LogicEngine : MonoBehaviour
         {
             yield return new WaitForFixedUpdate();
         }
+
         tile.powered = state;
     }
 }

@@ -16,6 +16,8 @@ public class Tile_wire : TileData
 
     public void setSignal(Tile tile, bool state)
     {
+        if (tile.powered == state) return;
+
         tile.powered = state;
     }
 

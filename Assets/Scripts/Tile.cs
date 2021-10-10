@@ -59,6 +59,7 @@ public class Tile
         {
             if (value != powered)
             {
+                //display stuff
                 if(value) sprite = WorldSettings.textures[tileData.poweredID];
                 else sprite = WorldSettings.textures[tileData.id];
 
@@ -67,6 +68,8 @@ public class Tile
                     if(metadata.Substring(Convert.ToByte(tileObject.GetChild(i).name), 1) == "2") tileObject.GetChild(i).GetComponent<SpriteRenderer>().sprite = WorldSettings.textures[12 + Convert.ToByte(value)];
                     else tileObject.GetChild(i).GetComponent<SpriteRenderer>().sprite = WorldSettings.textures[4 + Convert.ToByte(value)];
                 }
+
+                //tech stuff
                 poweredStorage = value;
                 setSignalToAdjacentTiles(value);
             }
@@ -117,8 +120,6 @@ public class Tile
 
     public void setSignal(bool state)
     {
-        if (powered == state) return;
-
         tileData.setSignal(this, state);
     }
 
@@ -135,7 +136,12 @@ public class Tile
         Tile adjacentTile = getAdjacentTile(index);
         if (adjacentTile == null) return;
 
-        if (metadata.Substring(index, 1) == "1" && adjacentTile.metadata.Substring(getOppositeIndex(index), 1) == "1") adjacentTile.setSignal(state);
+        if (metadata.Substring(index, 1) != "0" && adjacentTile.metadata.Substring(getOppositeIndex(index), 1) == "1") adjacentTile.setSignal(state);
+        else if(state == false && adjacentTile.powered && metadata.Substring(index, 1) == "1" && adjacentTile.metadata.Substring(getOppositeIndex(index), 1) == "2")
+        {
+            Debug.Log("Yo. Fix this. defaultSetSignalToAdjacentTile");
+            //setSignal(true);
+        }
     }
 
     public Tile getAdjacentTile(int index)
